@@ -8,14 +8,6 @@
 
 
 Pitch.destroy_all
-
-10.times do
-  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: 1, round_id: 1)
-end
-10.times do
-  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: 2, round_id: 1)
-end
-
 Cohort.destroy_all
 Student.destroy_all
 
@@ -26,19 +18,31 @@ Admin.create(
   :password => "password"
   )
 
-Cohort.create(name: "Bumblebee", active: "true", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
+Cohort.create(name: "Bumblebee", active: "true", pitch_limit: 3, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
 
-Cohort.create(name: "Fireball", active: "false", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
+Cohort.create(name: "Fireball", active: "false", pitch_limit: 3, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
 
-Cohort.create(name: "Fox", active: "true", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
+Cohort.create(name: "Fox", active: "true", pitch_limit: 3, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 5, vote_end: "2017-05-12", stage_id:0)
+
+
 Student.create(
   :first_name => "Uber",
   :last_name => "Student",
   :email => "student@hello.com",
-  :cohort => Cohort.last,
+  :cohort => Cohort.first,
   :password => "password"
   )
-10.times do
+Student.create(
+  :first_name => "Shery",
+  :last_name => "the Student",
+  :email => "student2@hello.com",
+  :cohort => Cohort.first,
+  :password => "password"
+  )
+
+
+#First Cohort
+8.times do
   student = {
     :first_name => Faker::Name.first_name,
     :last_name => Faker::Name.last_name,
@@ -49,12 +53,29 @@ Student.create(
   Student.create(student)
 end
 
-10.times do
-  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: 2, round_id: 0)
+#First Cohort
+15.times do
+  student = {
+    :first_name => Faker::Name.first_name,
+    :last_name => Faker::Name.last_name,
+    :email => Faker::Internet.email,
+    :cohort => Cohort.second,
+    :password => 'password'
+  }
+  Student.create(student)
 end
 
-
-20.times do
-  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: rand(1..10), round_id: 1)
+9.times do |t|
+  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: (t + 2), round_id: 0)
+  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: (t + 2), round_id: 0)
+  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: (t + 2), round_id: 0)
 end
+
+# 11.times do |t|
+#   Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: t, round_id: 1)
+# end
+
+
+
+
 

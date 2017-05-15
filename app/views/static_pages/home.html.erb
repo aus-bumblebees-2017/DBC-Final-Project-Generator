@@ -28,7 +28,7 @@
       </div>
       <br>
       <p>As a <i>Student</i> you will be able to submit pitches, and vote for your best options between your cohort. So you can be in the best team based on your preferences.</p>
-       <br> <br>
+       <br> <br><br>
       <% if !current_admin && !current_student %>
         <div class="row justify-content-center">
           <%=link_to("Sign in", new_student_session_path , class: "btn btn-success") %>
@@ -38,3 +38,4 @@
 
   </div> <!-- end of admin and student row -->
 </div>  <!-- end of home div -->
+<br>
