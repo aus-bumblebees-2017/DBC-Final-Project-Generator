@@ -7,37 +7,72 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-Pitch.destroy_all
+# Pitch.destroy_all
 
-10.times do
-  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: 1, round_id: 1)
-end
-10.times do
-  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: 2, round_id: 1)
-end
+# 10.times do
+#   Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: 1, round_id: 1)
+# end
+# 10.times do
+#   Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: 2, round_id: 1)
+# end
 
+Admin.destroy_all
 Cohort.destroy_all
 Student.destroy_all
+Pitch.destroy_all
 
-Admin.create(
+a=Admin.create(
   :first_name => "Uber",
   :last_name => "Admin",
   :email => "admin@hello.com",
   :password => "password"
   )
+if a.errors.any?
+  puts "Errors for Admin create"
+  a.errors.each {|e| p e}
+else
+  puts a.inspect
+end
 
-Cohort.create(name: "Bumblebee", active: "true", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
+cb=Cohort.create(name: "Bumblebee", active: "true", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
+if cb.errors.any?
+  puts "cb errors"
+  cb.errors.each {|e|p e}
+else
+  puts cb.inspect
+end
 
-Cohort.create(name: "Fireball", active: "false", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
+cf=Cohort.create(name: "Fireball", active: "false", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
+if cf.errors.any?
+  puts "cf errors"
+  cf.errors.each {|e|p e}
+else
+  puts cf.inspect
+end
 
-Cohort.create(name: "Fox", active: "true", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
-Student.create(
+cfx=Cohort.create(name: "Fox", active: "true", pitch_limit: 2, pitch_start: "2017-05-10", vote_start: "2017-05-11", vote_limit: 3, vote_end: "2017-05-12", stage_id:0)
+if cfx.errors.any?
+  puts "cfx errors"
+  cfx.errors.each {|e|p e}
+else
+  puts cfx.inspect
+end
+puts
+us=Student.create(
   :first_name => "Uber",
   :last_name => "Student",
   :email => "student@hello.com",
   :cohort => Cohort.last,
   :password => "password"
   )
+if us.errors.any?
+  puts "student create errors"
+  us.errors.each {|e|p e}
+else
+  puts us.inspect
+end
+puts
+students=[]
 10.times do
   student = {
     :first_name => Faker::Name.first_name,
@@ -46,15 +81,43 @@ Student.create(
     :cohort => Cohort.first,
     :password => 'password'
   }
-  Student.create(student)
+  s=Student.create(student)
+  if s.errors.any?
+   puts "student create errors"
+   s.errors.each {|e|p e}
+  else
+    puts s.inspect
+    students<<s
+  end
+end
+puts "\n\n Adding pitches for Uber Student"
+(2 + us.cohort.pitch_limit).times do
+  puts "--------------------------------"
+  p Pitch.all.count
+  Pitch.all.each {|x| p x.inspect}
+  p = Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: us.id, round_id: 0)
+  if p.errors.any?
+    puts "pitch create errors for #{p.inspect}"
+    p.errors.full_messages.each {|e|p e}
+  else
+    puts "Pitch added #{p.inspect}"
+  end
 end
 
-10.times do
-  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: 2, round_id: 0)
-end
-
+puts "\n\n Adding pitches for non-Uber Students"
 
 20.times do
-  Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: rand(1..10), round_id: 1)
+  puts "--------------------------------"
+  p Pitch.all.count
+  Pitch.all.each {|x| p x.inspect}
+  p = Pitch.create(name: Faker::App.name, description: Faker::Lorem.paragraph, student_id: students[rand(0..9)].id, round_id: 1)
+   if p.errors.any?
+    puts "pitch create errors #{p.inspect}"
+    p.errors.full_messages.each {|e|p e}
+    p.cohort.errors.full_messages.each {|e|p e}
+    # p.errors.delete
+  else
+    puts "Pitch added #{p.inspect}"
+  end
 end
 

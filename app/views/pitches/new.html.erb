@@ -1,13 +1,19 @@
-<h1 class="h1-pitches">Create a new pitch</h1>
-  <% if @errors %>
-    <%= @errors.first %>
+<h1 class="h1-pitches bg-faded">Create a new pitch</h1>
+<% if !@pitch.nil? && @pitch.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @pitch.errors.full_messages.each do |msg| %>
+          <li class="bg-warning text-black"><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
 <div class="row">
   <div class="new-pitch col-lg-6">
     <%= form_for :pitch, url: "/pitches" do |f|%>
-      
+
         <%= f.hidden_field :student_id, :value => current_student.id%>
-        
+
         <div class="form-group col-lg-12">
           <label for="name">Name:</label>
           <%= f.text_field :name, :class => "form-control "%><br>
