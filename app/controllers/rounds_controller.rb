@@ -8,7 +8,6 @@ class RoundsController < ApplicationController
     flash[:id] = @cohort.id
     if !params[:pitch_ids].nil?
       new_round(@cohort, params[:pitch_ids])
-
       if params[:round_status] == '1'
         redirect_to rounds_path
       elsif params[:round_status] == '2'

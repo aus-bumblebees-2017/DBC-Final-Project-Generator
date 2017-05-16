@@ -1,0 +1,13 @@
+<br>
+<h2>Teams</h2>
+<hr>
+  <% @cohort.current_pitches.each_with_index do |team, index|%>
+    <strong>Name:</strong> <%= team.name %> <br>
+    <strong>Description:</strong>  <%= team.description %> <br> <br>
+   <strong>Members:</strong>  <br>
+    <%  @teams[index].each do |s|%>
+      <%= s.full_name %> <br>
+      <% end %>
+      <hr>
+    <% end %>
+  

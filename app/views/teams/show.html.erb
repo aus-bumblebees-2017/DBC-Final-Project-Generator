@@ -1,0 +1,8 @@
+<h2> Team </h2>
+<strong>Name:</strong> <%= @pitch.name %> <br>
+    <strong>Description:</strong>  <%= @pitch.description %> <br> <br>
+   <strong>Members:</strong>  <br>
+    <%  @team.each do |s|%>
+      <%= s.full_name %> <br>
+      <% end %>
+      <hr>

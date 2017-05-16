@@ -4,7 +4,9 @@
 <thead>
 <tr>
 <th>Student</th>
+<%= form_for  :teams_ , url: teams_path do |f|%>
 <% @cohort.current_pitches.each do |pitch| %>
+
   <th><%= pitch.name %></th>
 <% end %>
   <th>Team</th>
@@ -14,10 +16,24 @@
 <% @cohort.students.each do |student| %>
 <tr>
   <td><%= student.full_name %></td>
-  <td><%= student.round_votes(@cohort.stage_id, 1) %></td>
-  <td><%= student.round_votes(@cohort.stage_id, 2) %> </td>
-  <td><%= select_tag(:team, options_for_select([["Team A", 1],["Team B", 2]])) %></td>
-</tr>
+    <% @cohort.current_pitches.each do |pitch| %>
+      <!-- @cohort.id -->
+      <td><% if student.votes.where(round_id: 1, pitch_id: pitch.id).first%>
+          <%=student.votes.where(round_id: 1, pitch_id: pitch.id).first.vote  %>
+          <% end %>
+      </td>
+    <% end %>
+    <td>
+       <%= f.select :"#{student.id}", @pitches.collect{|c|[c.name, c.id]}%>
+    </td>
+
+  </tr>
+
+ <% end %>
+
+   <%= f.submit('Create teams') %>
 <% end %>
+ 
+
 </tbody>
 </table>
