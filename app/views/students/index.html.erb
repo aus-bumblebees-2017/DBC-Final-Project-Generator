@@ -7,19 +7,17 @@
       </ul>
     </div>
   <% end %>
-<br>
-Welcome <%=  current_student.full_name %>,
-<br>
+<h1 class="bg-faded">
+Welcome <%=  current_student.full_name %>
+</h1>
 
 <% if current_student.cohort.stage_id == 0 %>
-  Pitches due date: 
-  <%= current_student.cohort.pitch_start %>
+  <h2>Pitches due date:
+  <%= current_student.cohort.pitch_start %> </h2>
 <% elsif current_student.cohort.stage_id == 1  %>
-  Voting due date:
-  <%= current_student.cohort.vote_end %>
+  <h2>Voting due date:
+  <%= current_student.cohort.vote_end %> </h2>
 <% end %>
-
-<br>
 <hr>
 <% if current_student %>
   <%= render "./pitches/index.html.erb" %>

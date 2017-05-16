@@ -10,7 +10,6 @@ class Cohort < ApplicationRecord
 	validates :vote_start, presence: true
 	validates :vote_end, presence: true
 
-
   def self.active
     Cohort.all.select do |c|
       c.active == true

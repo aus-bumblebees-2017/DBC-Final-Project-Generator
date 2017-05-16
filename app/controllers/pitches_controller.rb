@@ -34,7 +34,7 @@ class PitchesController < ApplicationController
     end
   end
 
-  def destroy 
+  def destroy
     @pitch = Pitch.find(params[:id])
     @pitch.destroy
     #later this is home
